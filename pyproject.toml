@@ -1,0 +1,26 @@
+[project]
+name            = "echo-subnet"
+version         = "0.1.0"
+readme          = "README.md"
+requires-python = ">=3.10"
+dependencies    = [
+    "jungo-sdk @ git+https://github.com/jungoai/jungo-sdk",
+]
+
+[project.scripts]
+"echo-worker"   = "echo_subnet.worker:main"
+"echo-monitor"  = "echo_subnet.monitor:main"
+
+[build-system]
+requires = ["hatchling", "wheel"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["echo_subnet"]
