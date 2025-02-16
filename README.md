@@ -1,4 +1,4 @@
-# 
+# Jungo Echo Subnet 
 
 The repository demonstrate a simple subnet in jungoai and can be use as a template to develop a new subnet and also learn
 how to run a node (worker or monitor) in a jungoai subnet.
@@ -125,7 +125,7 @@ echo-worker                     \
     --netuid        1001        \
     --wallet.name   alan        \
     --wallet.hotkey echoWorker  \
-    --subtensor.chain_endpoint ws://52.14.41.79:9944 \
+    --chain         wss://devnet-rpc.jungoai.xyz \
     --logging.debug
 ```
 
@@ -167,7 +167,7 @@ echo-monitor \
     --wallet.name   alan        \
     --wallet.hotkey echoMonitor \
     --netuid        1001        \
-    --subtensor.chain_endpoint ws://52.14.41.79:9944 \
+    --chain         wss://devnet-rpc.jungoai.xyz \
     --logging.debug 
 ```
 

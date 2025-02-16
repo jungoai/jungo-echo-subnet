@@ -1,12 +1,10 @@
 from typing             import Callable
-from jungo_sdk          import JNodeConfig, NodeError, RpcServer, Worker, serve_worker
+from jungo_sdk          import NodeError, RpcServer, add_args_worker_and_conf, mk_worker_from_args, serve_worker
 from echo_subnet.api    import PingApi
 
 import bittensor as bt
 import traceback
 import argparse
-
-from jungo_sdk.node import WorkerConfig
 
 
 class RpcServerImpl(RpcServer, PingApi):
@@ -22,41 +20,14 @@ class RpcServerImpl(RpcServer, PingApi):
     def echo(self, msg: str) -> str:
         return msg
 
-def config_from_args():
-    """
-    Returns the configuration object specific to this miner or validator after adding relevant arguments.
-    """
-    parser = argparse.ArgumentParser()
-    bt.wallet.add_args(parser)
-    bt.subtensor.add_args(parser)
-    bt.logging.add_args(parser)
-    bt.axon.add_args(parser)
-
-    bt_conf = bt.config(parser)
-
-    parser.add_argument("--netuid", type=int, help="netuid", required=True)
-    parser.add_argument("--ip", type=str, help="ip", required=True) # TODO: help
-    parser.add_argument("--port", type=int, help="port", required=True) # TODO: help
-
-    args = parser.parse_args()
-
-    inner = JNodeConfig(
-        bt_conf,
-        args.netuid
-    )
-
-    return WorkerConfig(
-        inner,
-        args.ip,
-        args.port # 4000
-    )
-
 def main():
-    config = config_from_args()
+    parser = argparse.ArgumentParser()
 
     try:
+        conf = add_args_worker_and_conf(parser)
+        args = parser.parse_args()
+        worker = mk_worker_from_args(args, conf)
         server = RpcServerImpl()
-        worker = Worker(config)
         serve_worker(worker.port, server)
     except NodeError as e:
         bt.logging.error("NodeError: " + str(e))

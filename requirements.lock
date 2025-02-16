@@ -106,7 +106,7 @@ jinja2==3.1.5
     # via bittensor-cli
 json-rpc==1.15.0
     # via jungo-sdk
-jungo-sdk @ git+https://github.com/jungoai/jungo-sdk@7edac942ba65371c08a43d467816160b960a5f8c
+jungo-sdk @ git+https://github.com/jungoai/jungo-sdk@4a77a35eb0314c2d441433fef708877eef096f73
     # via echo-subnet
 levenshtein==0.26.1
     # via python-levenshtein
